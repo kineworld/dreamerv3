@@ -236,7 +236,7 @@ def make_env(config, index, **overrides):
     module, cls = ctor.split(':')
     module = importlib.import_module(module)
     ctor = getattr(module, cls)
-  kwargs = config.env.get(suite, {})
+  kwargs = dict(config.env.get(suite, {}))  # Each environment owns its options.
   kwargs.update(overrides)
   if kwargs.pop('use_seed', False):
     kwargs['seed'] = hash((config.seed, index)) % (2 ** 32 - 1)
